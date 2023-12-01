@@ -1,0 +1,30 @@
+const int trigPin = 12; // Déclaration des 2 broches du capteur
+const int echoPin = 7;
+long distance_cm = 0;
+long intervalle_temps = 0;
+void setup() {
+  Serial.begin (9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+}
+void loop() {
+  // le senseur est activé par un pulse HIGH d’au moins 10 microsecondes.
+  // à la reception de ce signal il envoie une série de 8 ondes sonores (40KHz) (i.e. ultrason)
+  digitalWrite(trigPin, LOW); // reset du trigPin pour la validité du signal HIGH (excès de zèle?)
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  // lecture de la réponse
+  intervalle_temps = pulseIn(echoPin, HIGH); // Temps en µs séparant l&#39;envoi de la réception
+  // de la pulsation.
+  // conversion intervalle_temps en distance
+  // compte tenu que : vitesse du son (air à 20⁰C) =343,5 m/s = 0.03435 cm/µs
+  // vitesse = distance / temps
+  // Donc : distance = temps * vitesse
+  // Sauf que la distance parcourue est celle d’un aller-retour
+  // il faut ainsi diviser par 2
+  distance_cm = (intervalle_temps * 0.03435) / 2;
+  Serial.println(distance_cm);
+  delay(50); // 1/20 seconde sépare chaque prise de mesure
+}
