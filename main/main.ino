@@ -42,7 +42,12 @@ void loop()
 	// lecture de la réponse
 	intervalle_temps = pulseIn(echoPin, HIGH); // Temps en µs séparant l&#39;envoi de la réception
 
+
+
 	distance_cm = (intervalle_temps * 0.03435) / 2;
+
+  Serial.print("distance non smooth: ");
+  Serial.println(distance_cm);
 	liste[last_position] = distance_cm;
 	distance_average = running_average();
 
