@@ -70,7 +70,15 @@ void setup()
 
 void loop() 
 {
-	for (pos = 0; pos <= 180; pos += 10) { // goes from 0 degrees to 180 degrees
+	for (pos = 0; pos <= 180; pos = pos + 10) { // goes from 0 degrees to 180 degrees
+		// in steps of 15 degree
+		myservo.write(pos);              		  // tell servo to go to position in variable 'pos'
+		delay(15); 						          // waits 15ms for the servo to reach the position
+		allPos[pos] = readSensor();
+		Serial.println(distance_average);
+		delay(50); 								  // 1/20 seconde sépare chaque prise de mesure
+	}
+	for (pos = 0; pos <= 180; pos = pos - 10) { // goes from 0 degrees to 180 degrees
 		// in steps of 15 degree
 		myservo.write(pos);              // tell servo to go to position in variable 'pos'
 		delay(15); 						 // waits 15ms for the servo to reach the position
