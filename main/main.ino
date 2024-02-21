@@ -48,8 +48,8 @@ int readSensor(){
 
 	Serial.print("distance non smooth: ");
 	Serial.println(distance_cm);
-	liste[last_position] = distance_cm;
-	distance_average = running_average();
+	
+
 
 	last_position++;
 	if (last_position == 10)
@@ -70,20 +70,13 @@ void setup()
 
 void loop() 
 {
-	for (pos = 0; pos >= 180; pos = pos + 10) { // goes from 0 degrees to 180 degrees
-		// in steps of 15 degree
-		myservo.write(pos);              		  // tell servo to go to position in variable 'pos'
-		delay(15); 						          // waits 15ms for the servo to reach the position
-		Serial.println(readSensor());
-		delay(50); 								  // 1/20 seconde sépare chaque prise de mesure
-	}
-	for (pos = 180; pos <= 180; pos = pos - 10) { // goes from 0 degrees to 180 degrees
-		// in steps of 15 degree
-		myservo.write(pos);              // tell servo to go to position in variable 'pos'
-		delay(15); 						 // waits 15ms for the servo to reach the position
-		Serial.println(readSensor());
-		delay(50); // 1/20 seconde sépare chaque prise de mesure
-	}
-
-
+  for (byte i = 0; i <= 180; i =i + 10)
+  {
+    myservo.write(i);
+    //Serial.println(i);
+    readSensor();
+    delay(50);
+  }
+  delay(10);
+  myservo.write(0);
 }
