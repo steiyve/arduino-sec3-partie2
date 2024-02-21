@@ -2,6 +2,8 @@
 
 Servo myservo;  // create servo object to control a servo
 // twelve servo objects can be created on most boards
+Servo motor_left;
+Servo motor_right;
 
 const byte trigPin = 12; // Déclaration des 2 broches du capteur
 const byte echoPin = 7;
@@ -15,20 +17,8 @@ int liste[10];
 byte last_position = 0;
 long distance_average = 0;
 int pos = 0;    // variable to store the servo position
-int allPos[18];
 
 
-// fonction de calcul de la moyenne
-float running_average()
-{
-    float moyenne = 0;
-    for (int i = 0; i < 10; i++)
-    {
-        moyenne += liste[i];
-    }
-    moyenne = moyenne / 10;
-    return moyenne;
-}
 
 int readSensor(){
 	// le senseur est activé par un pulse HIGH d’au moins 10 microsecondes.
@@ -65,6 +55,8 @@ void setup()
 	pinMode(trigPin, OUTPUT);
 	pinMode(echoPin, INPUT);
 	myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+  motor_left.attach(3);
+  motor_right.attach(6);
 }
 
 
@@ -75,6 +67,9 @@ void loop()
     myservo.write(i);
     //Serial.println(i);
     readSensor();
+
+    motor_left.writeMicroseconds(150);
+    motor_right.writeMicroseconds(150);
     delay(50);
   }
   delay(10);
